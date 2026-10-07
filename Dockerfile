@@ -28,11 +28,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy existing application directory contents
+# Copy project files
 COPY . /var/www/html
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www/html
+# Install dependencies dengan Composer
+RUN composer install --no-dev --optimize-autoloader
 
 # Ubah document root apache ke public folder Laravel
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
